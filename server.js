@@ -13,6 +13,12 @@ import { isValidPassword } from './utils.js';
 import "dotenv/config.js";
 
 const app = express()
+app.use(
+  cors({
+      // credentials: true,
+      origin: true
+  })
+);
 
 const router = Router();
 
@@ -47,13 +53,8 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
-app.use(
-  cors({
-      credentials: true,
-      origin: true
-  })
-);
-app.options('*', cors());
+
+// app.options('*', cors());
 
 //PASSPORT STRATEGIES
 passport.use('login', new LocalStrategy((username, password, done) => {
