@@ -1,0 +1,5 @@
+-Ya estaría la parte del semi crud.
+-Falta hacer la vista de la galeria de fotos y el filtrado en react. PRIORIZAR ESTO
+-Cambiar estilos a los anchors.
+-Cuando se ingrese una foto redirigir a vista de las mismas
+-Ver el tema de deployear la api en heroku

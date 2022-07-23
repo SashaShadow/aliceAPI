@@ -28,7 +28,7 @@ class contenedorMongo {
         return this.db
         .then(_ => elemNuevo.save())
         .then(_=> {
-                return res.json({Mensaje: "Foto agregada"})
+                return res.redirect('/api/viewordelete')
         })
     }
 

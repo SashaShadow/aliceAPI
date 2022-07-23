@@ -4,6 +4,7 @@ const { Router } = express;
 import { User } from "./dbsConfig.js";
 import photoRouter from "./routers/photoRouter.js";
 import cors from 'cors';
+import MongoStore from 'connect-mongo';
 import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
@@ -22,7 +23,7 @@ const server = app.listen(PORT, () => {
  })
 server.on("error", error => console.log(`Error en servidor ${error}`));
 
-console.log(process.env.MONGODB)
+const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true}
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -33,8 +34,12 @@ app.set("views", "./views")
 app.use(cookieParser());
 
 app.use(session({
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB,
+      mongoOptions: advancedOptions,
+      ttl: 600
+  }),
     secret: 'fahrenheit',
-    cookie: { maxAge: 600000 },
     resave: true,
     saveUninitialized: true
    }))
@@ -116,6 +121,16 @@ router.get("/", (req, res) => {
   if (req.user) {
       req.session.user = req.user;
       req.user.admin ? res.render("pages/index.ejs", {user: req.user}) : res.send('No tienes acceso a esta ruta')
+  } else {
+      res.redirect('/api/login')
+  }
+});
+
+router.get("/viewordelete", (req, res) => {
+  
+  if (req.user) {
+      req.session.user = req.user;
+      req.user.admin ? res.render("pages/viewOrDelete.ejs", {user: req.user}) : res.send('No tienes acceso a esta ruta')
   } else {
       res.redirect('/api/login')
   }
