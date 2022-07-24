@@ -121,6 +121,7 @@ router.get("/", (req, res) => {
   
   if (req.user) {
       req.session.user = req.user;
+      req.session.code = process.env.CODE;
       req.user.admin ? res.render("pages/index.ejs", {user: req.user}) : res.send('No tienes acceso a esta ruta')
   } else {
       res.redirect('/api/login')

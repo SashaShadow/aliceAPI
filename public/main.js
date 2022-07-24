@@ -40,7 +40,7 @@ const deletePhoto = (id) => {
     return fetch(`http://localhost:8080/api/photos/${id}`, {
     method: 'DELETE',
     headers: {'Content-Type': 'application/json'},
-}).then(_ => window.location.replace('/api/delete'))
+}).then(_ => window.location.replace('/api/viewordelete'))
 }
 
 placePhotos();
